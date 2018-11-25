@@ -15,7 +15,7 @@ var nodes = [ {
     }      
  ];
 var edges = [{
-    data: {id: '13', source: '1', target: '3'}
+    data: {id: '1-3', source: '1', target: '3'}
 }];
 var nbNodes = 0;
 var nbEdges = 0;
@@ -94,13 +94,13 @@ function addEdge(){
             if (!containsEdge(from, to)) {
                 cy.add({
                     data: {
-                        id: from + '' + to,
+                        id: from + '-' + to,
                         source: from + '',
                         target: to + ''
                     }
                 });
                 edges.push({data: {
-                    id: from + '' + to,
+                    id: from + '-' + to,
                     source: from + '',
                     target: to + ''
                 }});
@@ -127,7 +127,7 @@ function addEdge(){
 function containsEdge(node1, node2){
     var isIn = false;
     var i = 0;
-    var keySearch = node1 + '' + node2;
+    var keySearch = node1 + '-' + node2;
     while(!isIn && i < edges.length){
         if (edges[i].data.id === keySearch || edges[i].data.id === mirrorify(keySearch)){
             isIn = true;
@@ -138,7 +138,7 @@ function containsEdge(node1, node2){
 }
 
 function mirrorify(s){
-    return s.split('').reverse().join('');
+    return s.split('-').reverse().join('-');
 }
 
 function getGraphMatrix(){
@@ -155,7 +155,7 @@ function getGraphMatrix(){
 
     edges.forEach(elt => {
 
-        endPoints = elt.data.id.split('');
+        endPoints = elt.data.id.split('-');
         matrix[endPoints[0]][endPoints[1]] = 1;
         matrix[endPoints[1]][endPoints[0]] = 1;
     }
@@ -172,7 +172,7 @@ function removeJoinPoints(points){
 
 
 function validate(){
-
+    //console.log("validation...")
     //hide all control elements
     var controls = document.getElementsByClassName("control");
     for(i=0;i<controls.length;i++) controls[i].style.display = "none";
@@ -195,6 +195,7 @@ function validate(){
     var adjMatrix = getGraphMatrix();
     var articulationPoints = articulation_point(adjMatrix);
     
+    //console.log(articulationPoints);
     
     colorNodes(articulationPoints,"red");
 
@@ -203,6 +204,10 @@ function validate(){
 function colorNodes(points, color){
     points.forEach( elt => {
         node = cy.$("#" + elt)["0"];
+        node.style({
+            'background-color': 'red'
+          })
+        
         
         
     });

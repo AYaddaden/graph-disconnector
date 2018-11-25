@@ -14,8 +14,12 @@ var nodes = [ {
       data: { id: '3' }
     }      
  ];
-var edges = [{
+ var edges = [{
     data: {id: '1-3', source: '1', target: '3'}
+},{
+    data: {id: '0-1', source: '0', target: '1'}
+},{
+    data: {id: '2-3', source: '2', target: '3'}
 }];
 var nbNodes = 0;
 var nbEdges = 0;
